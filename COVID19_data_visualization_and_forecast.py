@@ -264,7 +264,7 @@ case_thr=10 # the day threshold that the first N cases recorded
 deat_thr=3 # the day threshold that the first N deaths recorded
 caseperpop_thr=0
 deatperpop_thr=0
-country_list=['ITA','DEU','GBR','TUR']
+country_list=['ITA','DEU','GBR','USA']
  
 
 new_dict1=RUNcoviddatastory('Total_cases',PubDate,country_list,case_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
