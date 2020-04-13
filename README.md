@@ -46,7 +46,6 @@
 
 # original data link: #https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide
 PubDate='2020-04-13' # pubdate of the data file by European Centre for Disease Prevention and Control
-# original data link: https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide
 forecast_flag=True  
 forecast_mdl=['hwes','hwes','sarimax','hwes'] #options are ['hwes','sarimax']
 loga=False #take log of data
