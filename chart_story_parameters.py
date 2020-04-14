@@ -25,9 +25,10 @@ def gen_chart_story_params_dict(forecast_flag,mawindow,fdays,day_thr):
     
     INFOdata_origin='\nData: EDCD - European Centre for Disease Prevention and Control. Reports at 6:00-10:00 CET'
     INFOcontact='\nGraphics: generated using code: https://github.com/SenolIsci/COVID19_data_visualization_forecasting.git '
+    #INFOcontact=''
     INFOnote2='\nDashed lines are '+str(fdays)+' day forecasts calculated using Time-Series Forecasting model'
    
-    story_params=['covidcase_type','FIGylabel_text','FIGxlabel_text','Chart_title','INFOtext']
+    story_params=['covidcase_type','FIGylabel_text','FIGxlabel_text','Chart_title','INFOtext','FIGyvalformat']
     
     S1=pd.Series(index=story_params)
     S1.covidcase_type='total_cases.'
@@ -36,6 +37,7 @@ def gen_chart_story_params_dict(forecast_flag,mawindow,fdays,day_thr):
     S1.Chart_title=" Total Cases"
     INFOnote1='\nNumber of days are of the days since '+ str(day_thr)+ ' total cases first recorded'
     S1.INFOtext=INFOdata_origin+INFOcontact+INFOnote1+INFOnote2 if forecast_flag==True else INFOdata_origin+INFOcontact+INFOnote1
+    S1.FIGyvalformat='.0f'
     
     S2=pd.Series(index=story_params)
     S2.covidcase_type='total_deaths.'
@@ -44,6 +46,7 @@ def gen_chart_story_params_dict(forecast_flag,mawindow,fdays,day_thr):
     S2.Chart_title="Total Deaths"
     INFOnote1='\nNumber of days are of the days since '+ str(day_thr)+ ' total deaths first recorded'
     S2.INFOtext=INFOdata_origin+INFOcontact+INFOnote1+INFOnote2 if forecast_flag==True else INFOdata_origin+INFOcontact+INFOnote1
+    S2.FIGyvalformat='.0f'
     
     S3=pd.Series(index=story_params)
     S3.covidcase_type='cases.'
@@ -52,6 +55,7 @@ def gen_chart_story_params_dict(forecast_flag,mawindow,fdays,day_thr):
     S3.Chart_title="Daily Cases"
     INFOnote1='\nNumber of days are of the days since '+ str(day_thr)+ ' daily cases first recorded'
     S3.INFOtext=INFOdata_origin+INFOcontact+INFOnote1+INFOnote2 if forecast_flag==True else INFOdata_origin+INFOcontact+INFOnote1
+    S3.FIGyvalformat='.0f'
     
     S4=pd.Series(index=story_params)
     S4.covidcase_type='deaths.'
@@ -60,6 +64,7 @@ def gen_chart_story_params_dict(forecast_flag,mawindow,fdays,day_thr):
     S4.Chart_title="Daily Deaths"
     INFOnote1='\nNumber of days are of the days since '+ str(day_thr)+ ' daily deaths first recorded'
     S4.INFOtext=INFOdata_origin+INFOcontact+INFOnote1+INFOnote2 if forecast_flag==True else INFOdata_origin+INFOcontact+INFOnote1
+    S4.FIGyvalformat='.0f'
     
     S5=pd.Series(index=story_params)
     S5.covidcase_type='cases(MovAvg).'
@@ -68,6 +73,7 @@ def gen_chart_story_params_dict(forecast_flag,mawindow,fdays,day_thr):
     S5.Chart_title="Daily Cases"
     INFOnote1='\nNumber of days are of the days since '+ str(day_thr)+ ' daily cases (smoothed) first recorded'
     S5.INFOtext=INFOdata_origin+INFOcontact+INFOnote1+INFOnote2 if forecast_flag==True else INFOdata_origin+INFOcontact+INFOnote1
+    S5.FIGyvalformat='.0f'
     
     S6=pd.Series(index=story_params)
     S6.covidcase_type='deaths(MovAvg).'
@@ -76,6 +82,7 @@ def gen_chart_story_params_dict(forecast_flag,mawindow,fdays,day_thr):
     S6.Chart_title="Daily Deaths"
     INFOnote1='\nNumber of days are of the days since '+ str(day_thr)+ ' death cases (smoothed) first recorded'
     S6.INFOtext=INFOdata_origin+INFOcontact+INFOnote1+INFOnote2 if forecast_flag==True else INFOdata_origin+INFOcontact+INFOnote1
+    S6.FIGyvalformat='.0f'
     
     S7=pd.Series(index=story_params)
     S7.covidcase_type='cases(MovAvg)perPop1M.'
@@ -84,6 +91,7 @@ def gen_chart_story_params_dict(forecast_flag,mawindow,fdays,day_thr):
     S7.Chart_title="Daily Cases (scaled)"
     INFOnote1='\nNumber of days are of the days since '+ str(day_thr)+ ' daily cases (smoothed) first recorded'
     S7.INFOtext=INFOdata_origin+INFOcontact+INFOnote1+INFOnote2 if forecast_flag==True else INFOdata_origin+INFOcontact+INFOnote1
+    S7.FIGyvalformat='.0f'
     
     S8=pd.Series(index=story_params)
     S8.covidcase_type='deaths(MovAvg)perPop1M.'
@@ -92,6 +100,7 @@ def gen_chart_story_params_dict(forecast_flag,mawindow,fdays,day_thr):
     S8.Chart_title="Daily Deaths (scaled)"
     INFOnote1='\nNumber of days are of the days since '+ str(day_thr)+ ' daily deaths (smoothed) first recorded'
     S8.INFOtext=INFOdata_origin+INFOcontact+INFOnote1+INFOnote2 if forecast_flag==True else INFOdata_origin+INFOcontact+INFOnote1
+    S8.FIGyvalformat='.0f'
     
     S9=pd.Series(index=story_params)
     S9.covidcase_type='total_casesperPop1M.'
@@ -100,6 +109,7 @@ def gen_chart_story_params_dict(forecast_flag,mawindow,fdays,day_thr):
     S9.Chart_title=" Total Cases (scaled)"
     INFOnote1='\nNumber of days are of the days since '+ str(day_thr)+ ' total cases first recorded\n per 1 Million of Country population'
     S9.INFOtext=INFOdata_origin+INFOcontact+INFOnote1+INFOnote2 if forecast_flag==True else INFOdata_origin+INFOcontact
+    S9.FIGyvalformat='.0f'
     
     S10=pd.Series(index=story_params)
     S10.covidcase_type='total_deathsperPop1M.'
@@ -108,6 +118,7 @@ def gen_chart_story_params_dict(forecast_flag,mawindow,fdays,day_thr):
     S10.Chart_title="Total Deaths (scaled)"
     INFOnote1='\nNumber of days are of the days since '+ str(day_thr)+ ' total deaths first recorded\n per 1 Million of Country population'
     S10.INFOtext=INFOdata_origin+INFOcontact+INFOnote1+INFOnote2 if forecast_flag==True else INFOdata_origin+INFOcontact
+    S10.FIGyvalformat='.0f'
     
     S11=pd.Series(index=story_params)
     S11.covidcase_type='casesperPop1M.'
@@ -116,6 +127,7 @@ def gen_chart_story_params_dict(forecast_flag,mawindow,fdays,day_thr):
     S11.Chart_title="Daily Cases (scaled)"
     INFOnote1='\nNumber of days are of the days since '+ str(day_thr)+ ' daily cases first recorded\n per 1 Million of Country population'
     S11.INFOtext=INFOdata_origin+INFOcontact+INFOnote1+INFOnote2 if forecast_flag==True else INFOdata_origin+INFOcontact
+    S11.FIGyvalformat='.0f'
     
     S12=pd.Series(index=story_params)
     S12.covidcase_type='deathsperPop1M.'
@@ -124,6 +136,17 @@ def gen_chart_story_params_dict(forecast_flag,mawindow,fdays,day_thr):
     S12.Chart_title="Daily Deaths (scaled)"
     INFOnote1='\nNumber of days are of the days since '+ str(day_thr)+ ' daily deaths first recorded\n per 1 Million of Country population'
     S12.INFOtext=INFOdata_origin+INFOcontact+INFOnote1+INFOnote2 if forecast_flag==True else INFOdata_origin+INFOcontact
+    S12.FIGyvalformat='.0f'
+    
+    S13=pd.Series(index=story_params)
+    S13.covidcase_type='ratio_of_total_deaths_to_total_cases.'
+    S13.FIGylabel_text="Ratio of total deaths to total cases"
+    S13.FIGxlabel_text="Number of days"
+    S13.Chart_title=" Ratio of Total Deaths to Total Cases"
+    INFOnote1='\nNumber of days are of the days since '+ str(day_thr)+ ' total cases first recorded'
+    S13.INFOtext=INFOdata_origin+INFOcontact+INFOnote1+INFOnote2 if forecast_flag==True else INFOdata_origin+INFOcontact+INFOnote1
+    S13.FIGyvalformat='.2f'
+    
     
     Chart_Story_df=pd.DataFrame({
     'Total_cases':S1,
@@ -137,7 +160,8 @@ def gen_chart_story_params_dict(forecast_flag,mawindow,fdays,day_thr):
     'Total_cases_perPopulation':S9,
     'Total_deaths_perPopulation':S10,
     'Daily_cases_perPopulation':S11,
-    'Daily_deaths_perPopulation':S12
+    'Daily_deaths_perPopulation':S12,
+    'Ratio_of_total_deaths_to_total_cases':S13
     })
     
     return Chart_Story_df

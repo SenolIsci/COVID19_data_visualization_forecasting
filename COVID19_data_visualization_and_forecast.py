@@ -85,6 +85,7 @@ def gen_country_stats(df,cnt_code,covidcase_type,day_thr,mawindow):
     cntAdf.columns = ['cases.'+cnt_code,'deaths.'+cnt_code,'countryterritoryCode.'+cnt_code,'countriesAndTerritories.'+cnt_code,'popData2018.'+cnt_code]
     cntAdf['total_cases.'+cnt_code]=cntAdf['cases.'+cnt_code].cumsum()
     cntAdf['total_deaths.'+cnt_code]=cntAdf['deaths.'+cnt_code].cumsum()
+    cntAdf['ratio_of_total_deaths_to_total_cases.'+cnt_code]=cntAdf['total_deaths.'+cnt_code]/cntAdf['total_cases.'+cnt_code]
     cntAdf['cases(MovAvg).'+cnt_code]=cntAdf['cases.'+cnt_code].rolling(mawindow).mean()
     cntAdf['deaths(MovAvg).'+cnt_code]=cntAdf['deaths.'+cnt_code].rolling(mawindow).mean()
     cntAdf['cases(MovAvg)perPop1M.'+cnt_code]=cntAdf['cases(MovAvg).'+cnt_code]*1e6/cntAdf['popData2018.'+cnt_code]
@@ -153,6 +154,7 @@ def RUNcoviddatastory(selected_story_name,PubDate,country_list,day_thr,mawindow,
     FIGxlabel_text=selected_story['FIGxlabel_text']
     Chart_title=selected_story['Chart_title']
     INFOtext=selected_story['INFOtext'] 
+    yvalformat=selected_story['FIGyvalformat']
     new_dict={}
     pred_dic={}
     fig, ax = plt.subplots(figsize=(8, 8))
@@ -191,7 +193,7 @@ def RUNcoviddatastory(selected_story_name,PubDate,country_list,day_thr,mawindow,
     ax.legend(loc='upper left')
     ax.set_ylabel(FIGylabel_text,fontsize=cspp.BIGGER_SIZE)
     ax.set_xlabel(FIGxlabel_text,fontsize=cspp.BIGGER_SIZE)
-    ax.yaxis.set_major_formatter(matplotlib.ticker.StrMethodFormatter('{x:,.0f}'))
+    ax.yaxis.set_major_formatter(matplotlib.ticker.StrMethodFormatter('{x:,'+yvalformat+'}'))
     ax.annotate(INFOtext, (0,0), (0, -55), xycoords='axes fraction', textcoords='offset points', va='top',fontsize=10,fontstyle='italic',color='gray') 
     ax.set_title("COVID-19 "+Chart_title+" by Country\n"+' '+'as of '+PubDate+' 6:00-10:00 CET' ,fontsize=cspp.BIGGER_SIZE)
     fig.tight_layout()
@@ -249,10 +251,11 @@ def RUNcoviddatastory(selected_story_name,PubDate,country_list,day_thr,mawindow,
         #'Total_deaths_perPopulation'
         #'Daily_cases_perPopulation'
         #'Daily_deaths_perPopulation'
-PubDate='2020-04-13' # pubdate of the data file by European Centre for Disease Prevention and Control
+        #'Ratio_of_total_deaths_to_total_cases'
+PubDate='2020-04-14' # pubdate of the data file by European Centre for Disease Prevention and Control
 # original data link: https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide
 forecast_flag=True  
-forecast_mdl=['hwes','hwes','sarimax','hwes','hwes'] #options are ['hwes','sarimax']
+forecast_mdl=['hwes','hwes','sarimax','hwes'] #options are ['hwes','sarimax']
 loga=False #take log of data
 plot_figures_flag=True
 save_figures_flag=True
@@ -266,16 +269,16 @@ caseperpop_thr=0
 deatperpop_thr=0
 country_list=['ITA','DEU','GBR','USA']
  
-
 new_dict1=RUNcoviddatastory('Total_cases',PubDate,country_list,case_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
-new_dict1=RUNcoviddatastory('Total_deaths',PubDate,country_list,deat_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
-new_dict1=RUNcoviddatastory('Total_cases_perPopulation',PubDate,country_list,caseperpop_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
-new_dict1=RUNcoviddatastory('Total_deaths_perPopulation',PubDate,country_list,deatperpop_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
-new_dict1=RUNcoviddatastory('Daily_cases',PubDate,country_list,case_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
-new_dict1=RUNcoviddatastory('Daily_deaths',PubDate,country_list,deat_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
-new_dict1=RUNcoviddatastory('Daily_cases_perPopulation',PubDate,country_list,caseperpop_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
-new_dict1=RUNcoviddatastory('Daily_deaths_perPopulation',PubDate,country_list,deatperpop_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
-new_dict1=RUNcoviddatastory('Daily_cases_MovAvg',PubDate,country_list,case_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
-new_dict1=RUNcoviddatastory('Daily_deaths_MovAvg',PubDate,country_list,deat_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
-new_dict1=RUNcoviddatastory('Daily_cases_MovAvg_perPopulation',PubDate,country_list,caseperpop_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
-new_dict1=RUNcoviddatastory('Daily_deaths_MovAvg_perPopulation',PubDate,country_list,deatperpop_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
+new_dict2=RUNcoviddatastory('Total_deaths',PubDate,country_list,deat_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
+new_dict3=RUNcoviddatastory('Ratio_of_total_deaths_to_total_cases',PubDate,country_list,caseperpop_thr,mawindow,fdays,loga,False,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
+new_dict4=RUNcoviddatastory('Total_cases_perPopulation',PubDate,country_list,caseperpop_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
+new_dict5=RUNcoviddatastory('Total_deaths_perPopulation',PubDate,country_list,deatperpop_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
+new_dict6=RUNcoviddatastory('Daily_cases',PubDate,country_list,case_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
+new_dict7=RUNcoviddatastory('Daily_deaths',PubDate,country_list,deat_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
+new_dict8=RUNcoviddatastory('Daily_cases_perPopulation',PubDate,country_list,caseperpop_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
+new_dict9=RUNcoviddatastory('Daily_deaths_perPopulation',PubDate,country_list,deatperpop_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
+new_dict10=RUNcoviddatastory('Daily_cases_MovAvg',PubDate,country_list,case_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
+new_dict11=RUNcoviddatastory('Daily_deaths_MovAvg',PubDate,country_list,deat_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
+new_dict12=RUNcoviddatastory('Daily_cases_MovAvg_perPopulation',PubDate,country_list,caseperpop_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
+new_dict13=RUNcoviddatastory('Daily_deaths_MovAvg_perPopulation',PubDate,country_list,deatperpop_thr,mawindow,fdays,loga,forecast_flag,forecast_mdl,plot_figures_flag,save_figures_flag,verbose,show_mdl_detail)        
