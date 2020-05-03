@@ -34,7 +34,7 @@ def load_and_prep_data(file_address,verbose=False):
 
     df_org = pd.read_csv(file_address)
     df_org.head()
-    df=df_org[['dateRep','cases','deaths','countryterritoryCode','countriesAndTerritories','popData2018']].copy()
+    df=df_org[['dateRep','cases','deaths','countryterritoryCode','countriesAndTerritories','popData2018','continentExp']].copy()
    
     #insert record for world counts
     world_pop=df[['countriesAndTerritories','popData2018']].drop_duplicates()['popData2018'].sum()
@@ -47,7 +47,8 @@ def load_and_prep_data(file_address,verbose=False):
     record_world['popData2018']=world_pop
     record_world['countryterritoryCode']='WORLD'
     record_world['countriesAndTerritories']='WORLD'
-    record_world = record_world[['dateRep', 'cases', 'deaths', 'countryterritoryCode','countriesAndTerritories', 'popData2018']]
+    record_world['continentExp']='WORLD'
+    record_world = record_world[['dateRep', 'cases', 'deaths', 'countryterritoryCode','countriesAndTerritories', 'popData2018','continentExp']]
     
     df=df.append(record_world,ignore_index=True)
     df['dateRep']= pd.to_datetime(df['dateRep']) 
@@ -82,7 +83,7 @@ def gen_country_stats(df,cnt_code,covidcase_type,day_thr,mawindow):
     """
     cntAdf=df[df.countryterritoryCode==cnt_code].copy()
     cntAdf=cntAdf.sort_index()
-    cntAdf.columns = ['cases.'+cnt_code,'deaths.'+cnt_code,'countryterritoryCode.'+cnt_code,'countriesAndTerritories.'+cnt_code,'popData2018.'+cnt_code]
+    cntAdf.columns = ['cases.'+cnt_code,'deaths.'+cnt_code,'countryterritoryCode.'+cnt_code,'countriesAndTerritories.'+cnt_code,'popData2018.'+cnt_code,'continentExp'+cnt_code]
     cntAdf['total_cases.'+cnt_code]=cntAdf['cases.'+cnt_code].cumsum()
     cntAdf['total_deaths.'+cnt_code]=cntAdf['deaths.'+cnt_code].cumsum()
     cntAdf['ratio_of_total_deaths_to_total_cases.'+cnt_code]=cntAdf['total_deaths.'+cnt_code]/cntAdf['total_cases.'+cnt_code]
@@ -252,10 +253,10 @@ def RUNcoviddatastory(selected_story_name,PubDate,country_list,day_thr,mawindow,
         #'Daily_cases_perPopulation'
         #'Daily_deaths_perPopulation'
         #'Ratio_of_total_deaths_to_total_cases'
-PubDate='2020-04-14' # pubdate of the data file by European Centre for Disease Prevention and Control
+PubDate='2020-05-03' # pubdate of the data file by European Centre for Disease Prevention and Control
 # original data link: https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide
-forecast_flag=True  
-forecast_mdl=['hwes','hwes','sarimax','hwes'] #options are ['hwes','sarimax']
+forecast_flag=False  
+forecast_mdl=['hwes','hwes','sarimax','hwes','hwes'] #options are ['hwes','sarimax']
 loga=False #take log of data
 plot_figures_flag=True
 save_figures_flag=True

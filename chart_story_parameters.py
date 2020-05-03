@@ -25,7 +25,7 @@ def gen_chart_story_params_dict(forecast_flag,mawindow,fdays,day_thr):
     
     INFOdata_origin='\nData: EDCD - European Centre for Disease Prevention and Control. Reports at 6:00-10:00 CET'
     INFOcontact='\nGraphics: generated using code: https://github.com/SenolIsci/COVID19_data_visualization_forecasting.git '
-    #INFOcontact=''
+    INFOcontact=''
     INFOnote2='\nDashed lines are '+str(fdays)+' day forecasts calculated using Time-Series Forecasting model'
    
     story_params=['covidcase_type','FIGylabel_text','FIGxlabel_text','Chart_title','INFOtext','FIGyvalformat']
